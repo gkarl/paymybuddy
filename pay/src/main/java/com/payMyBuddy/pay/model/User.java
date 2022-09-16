@@ -36,6 +36,18 @@ public class User {
     @Column(name = "balance")
     private Double balance;
 
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL // Si je supprime l'user ça supprime son account, si je met ajour user ça mettra ajour account associé
+    )
+    private Account account;
+
+    @OneToMany(
+            mappedBy = "user", // nom donnée à l'attribut correspondant dans la Class Contact
+            fetch = FetchType.EAGER // Lorsqu'on va récupérer l'user tous ses contacts associés seront récupérés
+    )
+    private List<Contact> contactList = new ArrayList<>();
+
     private boolean enabled;
     private String role;
 
@@ -117,6 +129,22 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<Contact> getContactList() {
+        return contactList;
+    }
+
+    public void setContactList(List<Contact> contactList) {
+        this.contactList = contactList;
     }
 
     @Override

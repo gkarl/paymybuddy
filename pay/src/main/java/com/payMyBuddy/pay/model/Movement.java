@@ -23,6 +23,20 @@ public class Movement {
     @Column(name = "date")
     private Date date;
 
+
+    @OneToOne(
+            fetch = FetchType.EAGER // Lorsqu'on va récupérer un Movement l'user associé est récupéré
+    )
+    @JoinColumn(name = "user_id") // pour faire l'association avec la clé étrangére user_id dans la table movement
+    private User user;
+
+
+    @OneToOne(
+            fetch = FetchType.EAGER // Lorsqu'on va récupérer un Movement l'account associé est récupéré
+    )
+    @JoinColumn(name = "account_id") // pour faire l'association avec la clé étrangére account_id dans la table movement
+    private Account account;
+
     public Movement() {
     }
 
@@ -54,5 +68,21 @@ public class Movement {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

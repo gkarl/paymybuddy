@@ -1,5 +1,6 @@
 package com.payMyBuddy.pay.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -27,6 +28,21 @@ public class Transaction {
 
     @Column(name = "description")
     private String description;
+
+
+    @OneToOne
+    @JsonIgnoreProperties
+    @JoinColumn(name = "sender_user_id")
+    private User senderUser;
+
+
+    @OneToOne(
+            fetch = FetchType.EAGER
+    )
+    @JsonIgnoreProperties({"id", "last_name", "email", "password", "balance", "account", "contactList"})
+    @JoinColumn(name = "recipient_user_id")
+    private User recipientUser;
+
 
     public Transaction() {
     }
@@ -68,5 +84,21 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getSenderUser() {
+        return senderUser;
+    }
+
+    public void setSenderUser(User senderUser) {
+        this.senderUser = senderUser;
+    }
+
+    public User getRecipientUser() {
+        return recipientUser;
+    }
+
+    public void setRecipientUser(User recipientUser) {
+        this.recipientUser = recipientUser;
     }
 }

@@ -1,5 +1,7 @@
 package com.payMyBuddy.pay.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -22,6 +24,17 @@ public class Account {
     @NotBlank
     @Column(name = "balance")
     private Double balance;
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinColumn(name = "user_id") // pour faire l'association avec la clé étrangére user_id dans la table account
+    @JsonIgnoreProperties({"password", "balance", "account", "contactList"})
+    private User user;
 
     public Account() {
     }
@@ -54,5 +67,13 @@ public class Account {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
