@@ -5,12 +5,14 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @DynamicUpdate
 @Table(name = "movement")
-public class Movement {
+public class Movement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,7 +23,7 @@ public class Movement {
 
     @NotBlank
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
 
     @OneToOne(
@@ -37,14 +39,6 @@ public class Movement {
     @JoinColumn(name = "account_id") // pour faire l'association avec la clé étrangére account_id dans la table movement
     private Account account;
 
-    public Movement() {
-    }
-
-    public Movement(Integer id, Double amount, Date date) {
-        this.id = id;
-        this.amount = amount;
-        this.date = date;
-    }
 
     public Integer getId() {
         return id;
@@ -62,11 +56,11 @@ public class Movement {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

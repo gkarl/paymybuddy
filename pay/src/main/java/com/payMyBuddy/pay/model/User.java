@@ -1,15 +1,19 @@
 package com.payMyBuddy.pay.model;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 @Entity   // Indique que la classe correspond à une table de la base de données
 @DynamicUpdate  // Si un Update d'une ligne de la table evite de faire un update de tous les attributs mais que celui qui est modifié
 @Table(name = "user")  // Indique le nom de la table associée permet de faire une association entre une Classe et une Table de la DB
-public class User {
+public class User implements Serializable, UserDetails {
 
     // Attributs de la Classe qui vont correspondre aux colonnes de la table user
     @Id // Clé primaire de la table user
@@ -37,7 +41,7 @@ public class User {
     private Double balance;
 
     @OneToOne(
-            mappedBy = "user",
+            mappedBy = "user", // nom donnée à l'attribut correspondant dans la Class Account
             cascade = CascadeType.ALL // Si je supprime l'user ça supprime son account, si je met ajour user ça mettra ajour account associé
     )
     private Account account;
@@ -52,9 +56,7 @@ public class User {
     private String role;
 
 
-    public User(){
-
-    }
+    public User(){}
 
     public User(Integer id, String firstName, String lastName, String email, String password, Double balance, boolean enabled, String role) {
         this.id = id;
@@ -99,9 +101,9 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    /*public String getPassword() {
         return password;
-    }
+    }*/
 
     public void setPassword(String password) {
         this.password = password;
@@ -113,6 +115,36 @@ public class User {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
     }
 
     public boolean isEnabled() {
@@ -146,6 +178,8 @@ public class User {
     public void setContactList(List<Contact> contactList) {
         this.contactList = contactList;
     }
+
+
 
     @Override
     public String toString() {

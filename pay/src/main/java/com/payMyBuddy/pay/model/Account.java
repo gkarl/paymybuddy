@@ -6,11 +6,12 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Entity
 @DynamicUpdate
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +27,9 @@ public class Account {
     private Double balance;
 
     @OneToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.LAZY, // A la récupération de Account, user n'est pas récupéré automatiquement, les performances sont meilleures (la requête est plus légère)
             cascade = {
-                    CascadeType.PERSIST,
+                    CascadeType.PERSIST, // la cascade s’applique donc tant en création qu’en modification ->  nous ne voulons pas un cascade.ALL qui impliquerait la suppression
                     CascadeType.MERGE
             }
     )
@@ -36,14 +37,16 @@ public class Account {
     @JsonIgnoreProperties({"password", "balance", "account", "contactList"})
     private User user;
 
-    public Account() {
-    }
+    public Account() {}
 
-    public Account(Integer id, String iban, Double balance) {
+    public Account(Integer id, String iban, Double balance, User user) {
         this.id = id;
         this.iban = iban;
         this.balance = balance;
+        this.user = user;
     }
+
+
 
     public int getId() {
         return id;

@@ -3,17 +3,18 @@ package com.payMyBuddy.pay.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_contacts")
-public class Contact {
+public class Contact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.LAZY, // A la récupération de Contact, user n'est pas récupéré automatiquement, les performances sont meilleures (la requête est plus légère)
             cascade = CascadeType.DETACH
     )
     @JoinColumn(name = "user_contact_id")
@@ -21,15 +22,14 @@ public class Contact {
     private User userContact;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.LAZY, // A la récupération de contact user n'est pas récupérés automatiquement, les performances sont meilleures (la requête est plus légère)
             cascade = CascadeType.DETACH
     )
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"password", "balance", "account", "contactList"})
     private User user;
 
-    public Contact() {
-    }
+    public Contact() {}
 
     public Contact(Integer id, User userContact, User user) {
         this.id = id;
@@ -60,5 +60,10 @@ public class Contact {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact {" + "id=" + getId() + "userContact=" + getUserContact() + "user=" + getUser() + "}" ;
     }
 }

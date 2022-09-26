@@ -7,12 +7,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @DynamicUpdate
 @Table(name = "transaction")
-public class Transaction {
+public class Transaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,7 @@ public class Transaction {
 
     @NotBlank
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @NotBlank
     @Column(name = "amount")
@@ -32,26 +34,27 @@ public class Transaction {
 
     @OneToOne
     @JsonIgnoreProperties
-    @JoinColumn(name = "sender_user_id")
+    @JoinColumn(name = "sender_user_id") // pour faire l'association avec la clé étrangére sender_user_id dans la table transaction
     private User senderUser;
 
 
     @OneToOne(
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER // Lorsqu'on va récupérer la transaction, l'user associés est récupéré
     )
     @JsonIgnoreProperties({"id", "last_name", "email", "password", "balance", "account", "contactList"})
-    @JoinColumn(name = "recipient_user_id")
+    @JoinColumn(name = "recipient_user_id")  // pour faire l'association avec la clé étrangére recipient_user_id dans la table transaction
     private User recipientUser;
 
 
-    public Transaction() {
-    }
+    public Transaction() {}
 
-    public Transaction(Integer id, Date date, Double amount, String description) {
+    public Transaction(Integer id, LocalDate date, Double amount, String description, User senderUser, User recipientUser) {
         this.id = id;
         this.date = date;
         this.amount = amount;
         this.description = description;
+        this.senderUser        = senderUser;
+        this.recipientUser     = recipientUser;
     }
 
     public Integer getId() {
@@ -62,11 +65,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -8,4 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository // indique que la classe a pour rôle de communiquer avec la DB
 public interface UserRepository extends JpaRepository<User, Integer> {
     public Long countById(Integer id);
+
+    User findByEmail(String email);
+    void deleteByEmail(String email);
+    User findUsersByEmail(String email);
+
 }
