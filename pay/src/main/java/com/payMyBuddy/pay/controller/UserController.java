@@ -104,27 +104,26 @@ public class UserController {
 
     //*****
 
-    @GetMapping(value = "/user")
+    @GetMapping()
     public List<User> findAllUsers() {
         return userService.findAllUsers();
     }
 
-    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<User> findById(@PathVariable Integer id) {
         return userService.findById(id);
     }
 
-    @PutMapping(value = "/user/{id}")
+    @PutMapping(value = "/{id}")
     public void updateUser(@PathVariable Integer id, @RequestBody User user) {
         userService.updateUser(id, user);
     }
 
-    @GetMapping(value = "/user/contacts/{email}")
+    @GetMapping(value = "/contacts/{email}")
     public List<Contact> findContactByUserEmail(@PathVariable String email) {
         return userService.findContactByUserEmail(email);
     }
-
-    @GetMapping(value = "/user/deleteContact")
+    @GetMapping(value = "/deleteContact")
     public String deleteContact(@RequestParam("contactId") Integer contactId) {
         userService.deleteContactById(contactId);
         return "redirect:/profile";

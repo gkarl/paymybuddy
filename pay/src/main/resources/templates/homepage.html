@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+    <title>PayMyBuddy Homepage</title>
+
+
+</head>
+<body class="h-100;">
+<!-- Navigation tab config -->
+<nav class="navbar navbar-dark navbar-expand" style="background-color: #e9ecef">
+    <div class="container">
+        <div class="navbar-brand bg-success" style="padding: 10px; border-radius: 5px">
+            PayMyBuddy
+        </div>
+
+        <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <ul class="navbar-nav">
+
+                <li class="nav-item ">
+                    <a class="nav-link" style="color: black;font-size: larger;"
+                       th:href="@{/homepage}">Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-size: larger;"
+                       th:href="@{/transfer}">Transfer
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a  class="nav-link " style="color: black;font-size:
+                    larger;"
+                        th:href="@{/profile}">Profile
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link "  style="color: black;font-size: larger;"
+                       href="mailto:admin@paymybuddy.com">Contact
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a sec.authorize="isAuthenticated()" class="nav-link" style="color: black; font-size: larger;"
+                       th:href="@{/login}">Log off
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div>
+        <p>Home page</p>
+    </div>
+
+</body>
+</html>

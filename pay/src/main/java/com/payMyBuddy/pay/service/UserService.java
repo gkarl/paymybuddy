@@ -76,7 +76,8 @@ public class UserService implements UserDetailsService {
     public void saveUser(User user) throws NotCreateUserPossibleException {
         if(user.getFirstName() != "" && user.getLastName() != "" && user.getEmail() != "" && user.getPassword()  != ""){
             List<Contact> contactList = new ArrayList<>();
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            //user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            user.setPassword(user.getPassword());
             user.setBalance(2000.0);
             user.setAccount(null);
             user.setContactList(contactList);
