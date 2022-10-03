@@ -13,56 +13,56 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-dark navbar-expand" style="background-color: #e9ecef">
-        <div class="container">
-            <div class="navbar-brand bg-success" style="padding: 10px; border-radius: 5px">
-                PayMyBuddy
-            </div>
-
-            <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <ul class="navbar-nav">
-                    <li class="nav-item ">
-                        <a class="nav-link" style="color: black;font-size: larger;" th:href="@{/homepage}">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: black;font-size: larger;" th:href="@{/transfer}">
-                            Transfer
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a  class="nav-link " style="color: black;font-size:larger;" th:href="@{/profile}">
-                            Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link "  style="color: black;font-size: larger;" href="mailto:admin@paymybuddy.com">
-                            Contact
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a sec.authorize="isAuthenticated()" class="nav-link" style="color: black; font-size: larger;" th:href="@{/login}">
-                            Log off
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-dark navbar-expand" style="background-color: #e9ecef">
+    <div class="container">
+        <div class="navbar-brand bg-success" style="padding: 10px; border-radius: 5px">
+            PayMyBuddy
         </div>
-    </nav>
 
-    <div class="container h-100">
-        <!-- Welcome + firstname User-->
-        <h1 class="text-success fw-light" >
-            <!--<span class="text-secondary fw-light" th:text="${user}"></span>-->
-            <span class="text-secondary fw-light"></span>
-        </h1>
-        <br>
+        <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" style="color: black;font-size: larger;" th:href="@{/homepage}">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black;font-size: larger;" th:href="@{/transfer}">
+                        Transfer
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link " style="color: black;font-size:larger;" th:href="@{/profile}">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link "  style="color: black;font-size: larger;" th:href="@{/users}">
+                        Contact
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a sec.authorize="isAuthenticated()" class="nav-link" style="color: black; font-size: larger;" th:href="@{/login}">
+                        Log off
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container h-100">
+    <!-- Welcome + firstname User-->
+    <h1 class="text-success fw-light" >
+        <!--<span class="text-secondary fw-light" th:text="${user}"></span>-->
+        <span class="text-secondary fw-light"></span>
+    </h1>
+    <br>
 
     <!-- Section Add Contact -->
 
     <div align="center">
-        <form  method="post" th:action="@{/transfer/saveContact}">
+       <!-- <form  method="post" th:action="@{/transfer/saveContact}">-->
             <div class="col ">
                 <div class="row">
                     <div align="left">
@@ -72,12 +72,12 @@
                     </div>
                     <div class="col">
                         <button class="btn btn-primary" style="display: block; float: right; margin-right: 25px" type="submit">
-                            Add Connection
+                            <a class="h6" th:href="@{users/new}" style="text-decoration: none; color: white">Add Connection</a>
                         </button>
                     </div>
                 </div>
             </div>
-        </form>
+       <!-- </form>-->
     </div>
 
     <!--Section Send Money-->
@@ -111,7 +111,7 @@
 
                             <!-- Selector amount to contact transaction-->
                             <div class="col input-group">
-                               <!-- <input class="form-control" placeholder="Amount"  th:name="amount"-->
+                                <!-- <input class="form-control" placeholder="Amount"  th:name="amount"-->
                                 <input class="form-control" placeholder="Amount"
                                        type="number" step="0.01" >
                                 <span class="input-group-text">€</span>
@@ -133,15 +133,15 @@
 
         <!--<hr class="text-white">-->
         <div class="row">
-            <h4 class=" text-dark " style="margin-left:25px; margin-top: 20px;">My transactions</h4>
-        </div>
+                        <h4 class=" text-dark " style="margin-left:25px; margin-top: 20px;">My transactions</h4>
+                    </div>
 
 
-        <!--<hr class="text-white">-->
-        <div class="row justify-content-center" >
-            <div class="col-12">
-                <table class="table table-striped text-center table-sm " style="border: 2px solid #343A40!important;">
-                    <thead style="background-color: #28A745; ">
+                    <!--<hr class="text-white">-->
+                    <div class="row justify-content-center" >
+                        <div class="col-12">
+                            <table class="table table-striped text-center table-sm " style="border: 2px solid #343A40!important;">
+                                <thead style="background-color: #28A745; ">
                     <tr style="color: white; line-height: 60px; min-height: 60px; height: 60px;">
                         <th class="text-center">Connections</th>
                         <th class="text-center">Description</th>
@@ -166,6 +166,6 @@
         </div>
     </div>
 
-
+</div>
 </body>
 </html>

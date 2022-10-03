@@ -7,10 +7,10 @@ import com.payMyBuddy.pay.model.User;
 import com.payMyBuddy.pay.repository.ContactRepository;
 import com.payMyBuddy.pay.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+/*import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class UserService implements UserDetailsService {
+public class UserService {
+
+    //public class UserService implements UserDetailsService
 
     @Autowired
     private UserRepository userRepository;
@@ -112,7 +114,7 @@ public class UserService implements UserDetailsService {
         return contactRepository.findContactByUserId(id);
     }
 
-    public List<User> findUsersExceptUserPrincipal(String email) {
+    /*public List<User> findUsersExceptUserPrincipal(String email) {
         List<User> userList = userRepository.findAll();
         User user = userRepository.findUsersByEmail(email);
         userList.remove(userRepository.findByEmail(email));
@@ -120,7 +122,7 @@ public class UserService implements UserDetailsService {
             userList.remove(contact.getUserContact());
         }
         return userList;
-    }
+    }*/
 
     public void saveContact(Integer userId, Integer idContact) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User don't exist"));
@@ -138,8 +140,8 @@ public class UserService implements UserDetailsService {
         contactRepository.deleteContactById(contactId);
     }
 
-    @Override
+    /*@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
-    }
+    }*/
 }

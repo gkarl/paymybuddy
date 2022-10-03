@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+/*import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
@@ -27,9 +27,9 @@ public class PayApplication implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 
-		System.out.println("Le password encodé affiche : " +new BCryptPasswordEncoder().encode("P77711741@"));
+		/*System.out.println("Le password encodé affiche : " +new BCryptPasswordEncoder().encode("P77711741@"));
 		byte[] passwordb = "P77711741@".getBytes(StandardCharsets.UTF_8);
-		System.out.println("test pass " + passwordb);
+		System.out.println("test pass " + passwordb);*/
 		//System.out.println("test 2 : " + BCrypt.hashpw(rawPassword.toString(), salt));
 		// Affiche la liste des utilisateurs existants en Base de données
 		Iterable<User> users = userService.findAllUsers();

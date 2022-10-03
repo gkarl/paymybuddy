@@ -4,7 +4,7 @@ import com.payMyBuddy.pay.model.Account;
 import com.payMyBuddy.pay.model.User;
 import com.payMyBuddy.pay.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+//import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class AccountController {
     }*/
 
 
-    @GetMapping(value = "/addAccount")
+   /* @GetMapping(value = "/addAccount")
     public String addAccount(Model model) {
         Account account = new Account();
         model.addAttribute(account);
@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "/save")
-    public String saveaccount(@AuthenticationPrincipal User user, @ModelAttribute(value = "account") Account account) {
+    public String saveaccount( User user, @ModelAttribute(value = "account") Account account) {
         account.setUser(user);
         accountService.saveAccount(user.getId(), account);
         return "redirect:/profile";
@@ -52,5 +52,5 @@ public class AccountController {
     public String deleteContactById(@RequestParam("accountId") Integer id) {
         accountService.deleteAccountById(id);
         return "redirect:/users";
-    }
+    }*/
 }

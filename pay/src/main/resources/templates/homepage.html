@@ -24,33 +24,32 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item ">
-                    <a class="nav-link" style="color: black;font-size: larger;"
-                       th:href="@{/homepage}">Home
+                    <a class="nav-link" style="color: black;font-size: larger;" th:href="@{/homepage}">
+                        Home
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" style="color: black;font-size: larger;"
-                       th:href="@{/transfer}">Transfer
+                    <a class="nav-link" style="color: black;font-size: larger;" th:href="@{/transfer}">
+                        Transfer
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a  class="nav-link " style="color: black;font-size:
-                    larger;"
-                        th:href="@{/profile}">Profile
+                    <a  class="nav-link " style="color: black;font-size:larger;" th:href="@{/profile}">
+                        Profile
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link "  style="color: black;font-size: larger;"
-                       href="mailto:admin@paymybuddy.com">Contact
+                    <a class="nav-link "  style="color: black;font-size: larger;" th:href="@{/users}">
+                        Contact
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a sec.authorize="isAuthenticated()" class="nav-link" style="color: black; font-size: larger;"
-                       th:href="@{/login}">Log off
+                    <a sec.authorize="isAuthenticated()" class="nav-link" style="color: black; font-size: larger;" th:href="@{/login}">
+                        Log off
                     </a>
                 </li>
             </ul>
@@ -59,9 +58,56 @@
 </nav>
 
 
-    <div>
-        <p>Home page</p>
+
+
+<div class="container h-100">
+    <!-- Welcome + firstname User-->
+    <h1 class="text-dark" style="margin-top: 30px;">Welcome
+        <span  th:text="${user}"></span>
+    </h1>
+    <!-- Section Balance -->
+    <div class="h-100" >
+        <h2 class="text-dark"> Balance:
+            <span class="text-secondary" th:text="${balance}"></span>
+            <span class="text-dark">€</span>
+        </h2>
     </div>
+    <br>
+
+
+    <!-- Table of transaction -->
+
+    <div class="row">
+        <h4 class=" text-dark " style="margin-left:25px; margin-top: 20px;">My transactions</h4>
+    </div>
+
+
+    <div class="row justify-content-center" >
+        <div class="col-12">
+            <table class="table table-striped text-center table-sm " style="border: 2px solid #343A40!important;">
+                <thead style="background-color: #28A745; ">
+                <tr style="color: white; line-height: 60px; min-height: 60px; height: 60px;">
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Sender</th>
+                    <th class="text-center">Recipient</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transaction : ${transactions}">
+                    <td th:text="${transaction.getDate()}"></td>
+                    <td th:text="${transaction.getSenderUser().getFirstName() + ' '+ transaction.getSenderUser().getLastName()}"></td>
+                    <td th:text="${transaction.getRecipientUser().getFirstName() + ' '+ transaction.getRecipientUser().getLastName()}"></td>
+                    <td th:text="${transaction.getAmountTransaction()}+'€'"></td>
+                    <td th:text="${transaction.getDescription()}"></td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

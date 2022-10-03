@@ -1,6 +1,6 @@
 package com.payMyBuddy.pay.config;
 
-import org.springframework.context.annotation.Bean;
+/*import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,9 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
-@EnableWebSecurity
-public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{
-
+@EnableWebSecurity*/
+public class SpringSecurityConfig {
 
 /*    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -23,7 +22,7 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{
                 .roles("USER");
     }*/
 
-    @Override
+    /*@Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/public","/private/","/newUser", "/save", "/registration", "/")
@@ -41,11 +40,13 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter{
                 .logout()
                 .permitAll();
 
-    }
+    }*/
 
     /*@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }*/
+
+
 
 }

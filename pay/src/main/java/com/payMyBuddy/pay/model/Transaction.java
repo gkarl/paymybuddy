@@ -7,14 +7,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @DynamicUpdate
 @Table(name = "transaction")
-public class Transaction implements Serializable {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,15 +45,14 @@ public class Transaction implements Serializable {
     private User recipientUser;
 
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
-    public Transaction(Integer id, LocalDate date, Double amount, String description, User senderUser, User recipientUser) {
+    public Transaction(Integer id, LocalDate date, Double amount, String description) {
         this.id = id;
         this.date = date;
         this.amount = amount;
         this.description = description;
-        this.senderUser        = senderUser;
-        this.recipientUser     = recipientUser;
     }
 
     public Integer getId() {

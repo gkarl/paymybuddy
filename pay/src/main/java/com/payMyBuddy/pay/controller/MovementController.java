@@ -4,7 +4,7 @@ import com.payMyBuddy.pay.model.Movement;
 import com.payMyBuddy.pay.model.User;
 import com.payMyBuddy.pay.service.MovementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+//import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +30,15 @@ public class MovementController {
         return movementservice.findMovementById(id);
     }*/
 
-    @GetMapping(value = "/transferToApplication")
-    public String transferToApplication(@AuthenticationPrincipal User user, @RequestParam(value= "amount") Double amountMovement) {
+   /* @GetMapping(value = "/transferToApplication")
+    public String transferToApplication( User user, @RequestParam(value= "amount") Double amountMovement) {
         movementservice.transfertToApplication(user.getEmail(), amountMovement);
         return "redirect:/profile";
     }
 
     @GetMapping(value = "/transferToAccountBank")
-    public String transferToAccountBank(@AuthenticationPrincipal User user,  @RequestParam(value= "amount") Double amountMovement) {
+    public String transferToAccountBank( User user,  @RequestParam(value= "amount") Double amountMovement) {
         movementservice.transferToAccountBank(user.getEmail(), amountMovement);
         return "redirect:/profile";
-    }
+    }*/
 }

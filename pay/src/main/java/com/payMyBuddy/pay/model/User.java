@@ -1,8 +1,8 @@
 package com.payMyBuddy.pay.model;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +13,9 @@ import java.util.List;
 @Entity   // Indique que la classe correspond à une table de la base de données
 @DynamicUpdate  // Si un Update d'une ligne de la table evite de faire un update de tous les attributs mais que celui qui est modifié
 @Table(name = "user")  // Indique le nom de la table associée permet de faire une association entre une Classe et une Table de la DB
-public class User implements Serializable, UserDetails {
+public class User {
+
+    //public class User implements Serializable, UserDetails
 
     // Attributs de la Classe qui vont correspondre aux colonnes de la table user
     @Id // Clé primaire de la table user
@@ -101,9 +103,9 @@ public class User implements Serializable, UserDetails {
         this.email = email;
     }
 
-    /*public String getPassword() {
+    public String getPassword() {
         return password;
-    }*/
+    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -117,7 +119,7 @@ public class User implements Serializable, UserDetails {
         this.balance = balance;
     }
 
-    @Override
+   /* @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
@@ -145,7 +147,7 @@ public class User implements Serializable, UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
-    }
+    }*/
 
     public boolean isEnabled() {
         return enabled;
