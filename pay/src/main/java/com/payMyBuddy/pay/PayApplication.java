@@ -32,8 +32,8 @@ public class PayApplication implements CommandLineRunner {
 		System.out.println("test pass " + passwordb);*/
 		//System.out.println("test 2 : " + BCrypt.hashpw(rawPassword.toString(), salt));
 		// Affiche la liste des utilisateurs existants en Base de données
-		Iterable<User> users = userService.findAllUsers();
-		users.forEach(user -> System.out.println(user.getFirstName() + " " + user.getLastName())); // affiche en console la liste des utilisateurs existant en DB
+		/*Iterable<User> users = userService.findAllUsers();
+		users.forEach(user -> System.out.println(user.getFirstName() + " " + user.getLastName()));*/ // affiche en console la liste des utilisateurs existant en DB
 		//userService.getUsers().forEach(user -> System.out.println(user.getFirstName() + " " + user.getLastName())); // idem que la ligne précédente
 
 		// Affiche un utilisateur en particulier en fonction de son id ici on va choisir le 1er en base de données

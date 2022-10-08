@@ -48,6 +48,8 @@ public class HomepageController {
         return "transfer";
     }
 
+     */
+
     @GetMapping("/profile")
     public String getProfile( User user, Model model) {
         List<Account> userAccountList = accountService.findByUserId(user.getId());
@@ -56,5 +58,5 @@ public class HomepageController {
         model.addAttribute("accounts", userAccountList);
         model.addAttribute("movements", new Movement());
         return "profile";
-    }*/
+    }
 }
