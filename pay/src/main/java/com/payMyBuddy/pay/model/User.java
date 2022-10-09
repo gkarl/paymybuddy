@@ -1,6 +1,8 @@
 package com.payMyBuddy.pay.model;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,7 +15,7 @@ import java.util.List;
 @Entity   // Indique que la classe correspond à une table de la base de données
 @DynamicUpdate  // Si un Update d'une ligne de la table evite de faire un update de tous les attributs mais que celui qui est modifié
 @Table(name = "user")  // Indique le nom de la table associée permet de faire une association entre une Classe et une Table de la DB
-public class User {
+public class User implements Serializable, UserDetails {
 
     //public class User implements Serializable, UserDetails
 
@@ -32,7 +34,7 @@ public class User {
     private String lastName;
 
     @NotBlank
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank
@@ -60,16 +62,20 @@ public class User {
 
     public User(){}
 
-    public User(Integer id, String firstName, String lastName, String email, String password, Double balance, boolean enabled, String role) {
+    public User(Integer id, String firstName, String lastName, String email, String password, Double balance, Account account, List<Contact> contactList, boolean enabled, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.balance = balance;
+        this.account     = account;
+        this.contactList = contactList;
         this.enabled = enabled;
         this.role = role;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -103,10 +109,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -119,35 +121,34 @@ public class User {
         this.balance = balance;
     }
 
-   /* @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
-    @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
-    }*/
+        return true;
+    }
 
     public boolean isEnabled() {
         return enabled;

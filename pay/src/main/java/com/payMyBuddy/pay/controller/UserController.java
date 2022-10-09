@@ -104,7 +104,7 @@ public class UserController {
 
     //*****
 
-    /*@GetMapping()
+    @GetMapping()
     public List<User> findAllUsers() {
         return userService.findAllUsers();
     }
@@ -123,10 +123,11 @@ public class UserController {
     public List<Contact> findContactByUserEmail(@PathVariable String email) {
         return userService.findContactByUserEmail(email);
     }
+
     @GetMapping(value = "/deleteContact")
     public String deleteContact(@RequestParam("contactId") Integer contactId) {
         userService.deleteContactById(contactId);
         return "redirect:/profile";
-    }*/
+    }
 
 }

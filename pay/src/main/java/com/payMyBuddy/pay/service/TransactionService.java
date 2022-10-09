@@ -36,7 +36,7 @@ public class TransactionService {
         return transactionRepository.findById(id);
     }
 
-    public List<Transaction> findTransactionOfUserPrincipal(User user) {
+    public List<Transaction> findTransactionsOfUserPrincipal(User user) {
         List<Transaction> senderUserList = transactionRepository.findTransactionsBySenderUserEmail(user.getEmail());
         List<Transaction> receiverUserList = transactionRepository.findTransactionsByRecipientUserEmail(user.getEmail());
         List<Transaction> completUserList = Stream.of(senderUserList, receiverUserList).flatMap((x->x.stream())).collect(Collectors.toList());

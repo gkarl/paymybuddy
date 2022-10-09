@@ -72,7 +72,7 @@ public class TransactionServiceTest {
         transactionList.add(transaction);
 
         when(transactionRepository.findTransactionsBySenderUserEmail(user1.getEmail())).thenReturn(transactionList);
-       // Assertions.assertTrue(transactionService.findTransactionsOfUserPrincipal(user1).size() > 0);
+        Assertions.assertTrue(transactionService.findTransactionsOfUserPrincipal(user1).size() > 0);
     }
 
     @Test

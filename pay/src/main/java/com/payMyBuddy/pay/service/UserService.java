@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +25,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class UserService {
+public class UserService implements UserDetailsService {
 
     //public class UserService implements UserDetailsService
 
@@ -34,6 +38,9 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public UserService() {
     }
 
     public List<User> findAllUsers(){
@@ -67,31 +74,28 @@ public class UserService {
     public Optional<User> findById(Integer id) {
         return userRepository.findById(id);
     }
-
-
-    public User findUserByEmail(String email) {
+    
+    public User findUserByEmail(String email) throws NotFoundException{
         return userRepository.findByEmail(email);
     }
-
-
-
+    
     public void saveUser(User user) throws NotCreateUserPossibleException {
         if(user.getFirstName() != "" && user.getLastName() != "" && user.getEmail() != "" && user.getPassword()  != ""){
             List<Contact> contactList = new ArrayList<>();
-            //user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setPassword(user.getPassword());
             user.setBalance(2000.0);
             user.setAccount(null);
             user.setContactList(contactList);
             user.setEnabled(true);
+            user.setRole("USER");
             userRepository.save(user);
         }
         else{
             throw new NotCreateUserPossibleException("Parameters not valid");
         }
     }
-
-
+    
     public void updateUser(Integer id, User userUpdate)   {
         Optional<User> user = userRepository.findById(id);
         user.get().setFirstName(userUpdate.getFirstName());
@@ -114,7 +118,7 @@ public class UserService {
         return contactRepository.findContactByUserId(id);
     }
 
-    /*public List<User> findUsersExceptUserPrincipal(String email) {
+    public List<User> findUsersExceptUserPrincipal(String email) {
         List<User> userList = userRepository.findAll();
         User user = userRepository.findUsersByEmail(email);
         userList.remove(userRepository.findByEmail(email));
@@ -122,7 +126,7 @@ public class UserService {
             userList.remove(contact.getUserContact());
         }
         return userList;
-    }*/
+    }
 
     public void saveContact(Integer userId, Integer idContact) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User don't exist"));
@@ -140,8 +144,8 @@ public class UserService {
         contactRepository.deleteContactById(contactId);
     }
 
-    /*@Override
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
-    }*/
+    }
 }

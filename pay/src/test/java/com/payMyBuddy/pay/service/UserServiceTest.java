@@ -180,120 +180,120 @@ public class UserServiceTest {
         assertTrue(this.userService.findAllUsers().isEmpty());
     }*/
 
-  @Test
+    @Test
     @DisplayName("Test findUsersExceptUserPrincipal")
     public  void findUsersExceptUserPrincipalTest() {
-      User user1 = new User();
-      Account account1 = new Account();
-      user1.setId(1);
-      user1.setFirstName("Karl");
-      user1.setLastName("Gavillot");
-      user1.setEmail("karl@gmail.com");
-      user1.setPassword("P77711741");
-      user1.setBalance(50000.0);
-      user1.setAccount(new Account());
-      user1.setRole("USER");
-      user1.setId(1);
-      user1.setContactList(new ArrayList<Contact>());
-      user1.setEnabled(true);
-      account1.setId(1);
-      account1.setIban("FR9960001009530067891234001");
-      account1.setBalance(50000.0);
-      account1.setUser(user1);
+        User user1 = new User();
+        Account account1 = new Account();
+        user1.setId(1);
+        user1.setFirstName("Karl");
+        user1.setLastName("Gavillot");
+        user1.setEmail("karl@gmail.com");
+        user1.setPassword("P77711741");
+        user1.setBalance(50000.0);
+        user1.setAccount(new Account());
+        user1.setRole("USER");
+        user1.setId(1);
+        user1.setContactList(new ArrayList<Contact>());
+        user1.setEnabled(true);
+        account1.setId(1);
+        account1.setIban("FR9960001009530067891234001");
+        account1.setBalance(50000.0);
+        account1.setUser(user1);
 
-      User user2 = new User();
-      Account account2 = new Account();
-      user2.setId(2);
-      user2.setFirstName("Carlen");
-      user2.setLastName("Laurent");
-      user2.setEmail("carlen@gmail.com");
-      user2.setPassword("P45061284@");
-      user2.setBalance(3000.0);
-      user2.setAccount(new Account());
-      user2.setRole("USER");
-      user2.setId(2);
-      user2.setContactList(new ArrayList<Contact>());
-      user2.setEnabled(true);
-      account2.setId(2);
-      account2.setIban("FR9960001009530067891234002");
-      account2.setBalance(3000.0);
-      account2.setUser(user2);
+        User user2 = new User();
+        Account account2 = new Account();
+        user2.setId(2);
+        user2.setFirstName("Carlen");
+        user2.setLastName("Laurent");
+        user2.setEmail("carlen@gmail.com");
+        user2.setPassword("P45061284@");
+        user2.setBalance(3000.0);
+        user2.setAccount(new Account());
+        user2.setRole("USER");
+        user2.setId(2);
+        user2.setContactList(new ArrayList<Contact>());
+        user2.setEnabled(true);
+        account2.setId(2);
+        account2.setIban("FR9960001009530067891234002");
+        account2.setBalance(3000.0);
+        account2.setUser(user2);
 
-      User user3 = new User();
-      Account account3 = new Account();
-      user3.setId(2);
-      user3.setFirstName("Mathieu");
-      user3.setLastName("Nebra");
-      user3.setEmail("mathieu@gmail.com");
-      user3.setPassword("P11111111@");
-      user3.setBalance(999999.0);
-      user3.setAccount(new Account());
-      user3.setRole("USER");
-      user3.setId(3);
-      user3.setContactList(new ArrayList<Contact>());
-      user3.setEnabled(true);
-      account3.setId(3);
-      account3.setIban("FR9960001009530067891234003");
-      account3.setBalance(999999.0);
-      account3.setUser(user2);
+        User user3 = new User();
+        Account account3 = new Account();
+        user3.setId(2);
+        user3.setFirstName("Mathieu");
+        user3.setLastName("Nebra");
+        user3.setEmail("mathieu@gmail.com");
+        user3.setPassword("P11111111@");
+        user3.setBalance(999999.0);
+        user3.setAccount(new Account());
+        user3.setRole("USER");
+        user3.setId(3);
+        user3.setContactList(new ArrayList<Contact>());
+        user3.setEnabled(true);
+        account3.setId(3);
+        account3.setIban("FR9960001009530067891234003");
+        account3.setBalance(999999.0);
+        account3.setUser(user2);
 
-      when(userRepository.findUsersByEmail(anyString())).thenReturn(user2);
-      List<User> userList = new ArrayList<User>();
-      when(userRepository.findAll()).thenReturn(userList);
-     /* List<User> userList1 = userService.findUsersExceptUserPrincipal("karl@gmail.com");
-      assertSame(userList, userList1);
-      assertTrue(userList1.isEmpty());
+        when(userRepository.findUsersByEmail(anyString())).thenReturn(user2);
+        List<User> userList = new ArrayList<User>();
+        when(userRepository.findAll()).thenReturn(userList);
+        List<User> userList1 = userService.findUsersExceptUserPrincipal("karl@gmail.com");
+        assertSame(userList, userList1);
+        assertTrue(userList1.isEmpty());
 
-      verify(userRepository).findAll();
-      verify(userRepository).findByEmail(anyString());
-      verify(userRepository).findUsersByEmail(anyString());
-      assertSame(userList1, userService.findAllUsers());*/
-  }
+        verify(userRepository).findAll();
+        verify(userRepository).findByEmail(anyString());
+        verify(userRepository).findUsersByEmail(anyString());
+        assertSame(userList1, userService.findAllUsers());
+    }
 
-  @Test
+    @Test
     @DisplayName("Test saveContact")
     public  void saveContactTest() {
-      User user1 = new User();
-      Account account1 = new Account();
-      user1.setId(1);
-      user1.setFirstName("Karl");
-      user1.setLastName("Gavillot");
-      user1.setEmail("karl@gmail.com");
-      user1.setPassword("P77711741");
-      user1.setBalance(50000.0);
-      user1.setAccount(new Account());
-      user1.setRole("USER");
-      user1.setId(1);
-      user1.setContactList(new ArrayList<Contact>());
-      user1.setEnabled(true);
-      account1.setId(1);
-      account1.setIban("FR9960001009530067891234001");
-      account1.setBalance(50000.0);
-      account1.setUser(user1);
+        User user1 = new User();
+        Account account1 = new Account();
+        user1.setId(1);
+        user1.setFirstName("Karl");
+        user1.setLastName("Gavillot");
+        user1.setEmail("karl@gmail.com");
+        user1.setPassword("P77711741");
+        user1.setBalance(50000.0);
+        user1.setAccount(new Account());
+        user1.setRole("USER");
+        user1.setId(1);
+        user1.setContactList(new ArrayList<Contact>());
+        user1.setEnabled(true);
+        account1.setId(1);
+        account1.setIban("FR9960001009530067891234001");
+        account1.setBalance(50000.0);
+        account1.setUser(user1);
 
-      User user2 = new User();
-      Account account2 = new Account();
-      user2.setId(2);
-      user2.setFirstName("Carlen");
-      user2.setLastName("Laurent");
-      user2.setEmail("carlen@gmail.com");
-      user2.setPassword("P45061284@");
-      user2.setBalance(3000.0);
-      user2.setAccount(new Account());
-      user2.setRole("USER");
-      user2.setId(2);
-      user2.setContactList(new ArrayList<Contact>());
-      user2.setEnabled(true);
-      account2.setId(2);
-      account2.setIban("FR9960001009530067891234002");
-      account2.setBalance(3000.0);
-      account2.setUser(user2);
+        User user2 = new User();
+        Account account2 = new Account();
+        user2.setId(2);
+        user2.setFirstName("Carlen");
+        user2.setLastName("Laurent");
+        user2.setEmail("carlen@gmail.com");
+        user2.setPassword("P45061284@");
+        user2.setBalance(3000.0);
+        user2.setAccount(new Account());
+        user2.setRole("USER");
+        user2.setId(2);
+        user2.setContactList(new ArrayList<Contact>());
+        user2.setEnabled(true);
+        account2.setId(2);
+        account2.setIban("FR9960001009530067891234002");
+        account2.setBalance(3000.0);
+        account2.setUser(user2);
 
-      Optional<User> userTest = Optional.<User>of(user2);
-      when(userRepository.findById((Integer) org.mockito.Mockito.any())).thenReturn(userTest);
-      assertThrows(NotFoundException.class, () -> this.userService.saveContact(1, 1));
-      verify(this.userRepository, times(2)).findById((Integer) org.mockito.Mockito.any());
-  }
+        Optional<User> userTest = Optional.<User>of(user2);
+        when(userRepository.findById((Integer) org.mockito.Mockito.any())).thenReturn(userTest);
+        assertThrows(NotFoundException.class, () -> this.userService.saveContact(1, 1));
+        verify(this.userRepository, times(2)).findById((Integer) org.mockito.Mockito.any());
+    }
 
 }
 
