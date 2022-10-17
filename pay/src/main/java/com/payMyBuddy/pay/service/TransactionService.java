@@ -24,18 +24,6 @@ public class TransactionService {
     @Autowired
     private UserRepository userRepository;
 
-    public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
-
-    public List<Transaction> findAllTransactions(){
-        return transactionRepository.findAll();
-    }
-
-    public Optional<Transaction> findTransactionById(Integer id) {
-        return transactionRepository.findById(id);
-    }
-
     public List<Transaction> findTransactionsOfUserPrincipal(User user) {
         List<Transaction> senderUserList = transactionRepository.findTransactionsBySenderUserEmail(user.getEmail());
         List<Transaction> receiverUserList = transactionRepository.findTransactionsByRecipientUserEmail(user.getEmail());
@@ -47,6 +35,19 @@ public class TransactionService {
         transaction.setDate(LocalDate.now());
         return transactionRepository.save(transaction);
     }
+
+    /*public TransactionService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
+    public List<Transaction> findAllTransactions(){
+        return transactionRepository.findAll();
+    }
+
+    public Optional<Transaction> findTransactionById(Integer id) {
+        return transactionRepository.findById(id);
+    }*/
+
 
     public void transfer(String emailSender, String emailRecipient, LocalDate date, Double amountTransaction, String description) {
         User userSender = userRepository.findByEmail(emailSender);
@@ -69,7 +70,7 @@ public class TransactionService {
             transaction.setSenderUser(userSender);
             transaction.setRecipientUser(userRecipient);
             transaction.setDate(localDate);
-            transaction.setAmount(amountTransaction);
+            transaction.setAmountTransaction(amountTransaction);
             transaction.setDescription(description);
             transactionRepository.save(transaction);
         }

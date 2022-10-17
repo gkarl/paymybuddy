@@ -25,7 +25,7 @@ public class Transaction {
 
     @NotBlank
     @Column(name = "amount")
-    private  Double amount;
+    private  Double amountTransaction;
 
     @Column(name = "description")
     private String description;
@@ -48,11 +48,13 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Integer id, LocalDate date, Double amount, String description) {
+    public Transaction(Integer id, LocalDate date, Double amountTransaction, String description, User senderUser, User recipientUser) {
         this.id = id;
         this.date = date;
-        this.amount = amount;
+        this.amountTransaction = amountTransaction;
         this.description = description;
+        this.senderUser = senderUser;
+        this.recipientUser = recipientUser;
     }
 
     public Integer getId() {
@@ -71,12 +73,12 @@ public class Transaction {
         this.date = date;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getAmountTransaction() {
+        return amountTransaction;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setAmountTransaction(Double amountTransaction) {
+        this.amountTransaction = amountTransaction;
     }
 
     public String getDescription() {

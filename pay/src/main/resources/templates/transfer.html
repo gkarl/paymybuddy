@@ -43,26 +43,34 @@
                 </li>
                 <li class="nav-item">
                     <a sec.authorize="isAuthenticated()" class="nav-link" style="color: black; font-size: larger;" th:href="@{/login}">
-                        Log off
+                        Logout
                     </a>
                 </li>
             </ul>
         </div>
+        <div style="padding: 10px; border-radius: 5px">
+            <span  th:text="${firstName}"></span>
+            <span  th:text="${lastName}"></span>
+        </div>
     </div>
 </nav>
 
+
 <div class="container h-100">
-    <!-- Welcome + firstname User-->
-    <h1 class="text-success fw-light" >
-        <!--<span class="text-secondary fw-light" th:text="${user}"></span>-->
-        <span class="text-secondary fw-light"></span>
-    </h1>
+
+    <!-- Section Balance -->
+    <div class="h-100" style="margin-top: 20px;">
+        <h2> Balance:
+            <span class="text-danger" th:text="${balance}"></span>
+            <span>€</span>
+        </h2>
+    </div>
     <br>
 
     <!-- Section Add Contact -->
 
     <div align="center">
-       <!-- <form  method="post" th:action="@{/transfer/saveContact}">-->
+        <form  method="post" th:action="@{/transfer/saveContact}">
             <div class="col ">
                 <div class="row">
                     <div align="left">
@@ -71,13 +79,20 @@
                         </h4>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary" style="display: block; float: right; margin-right: 25px" type="submit">
-                            <a class="h6" th:href="@{users/new}" style="text-decoration: none; color: white">Add Connection</a>
+                        <select th:name="idContact" class="form-select">
+                            <option>Select new Contact</option>
+                            <option th:each="user : ${userAddContact}"
+                                    th:text="${user.getFirstName()+' '+user.getLastName()}"
+                                    th:value="${user.getId()}">
+                            </option>
+                        </select>
+                        <button class="btn btn-primary" style="display: block; float: right;
+                                    margin-right: 25px" type="submit">Add Contact
                         </button>
                     </div>
                 </div>
             </div>
-       <!-- </form>-->
+        </form>
     </div>
 
     <!--Section Send Money-->
@@ -90,11 +105,10 @@
 
                         <!--Filling fiel contact transaction -->
                         <div class="row">
-
                             <!-- Selector for contact transaction-->
                             <div class="col" style=" top: 5px">
                                 <select class="form-select" th:name="emailContact">
-                                    <option selected>Select a Connection
+                                    <option selected>Select a Contact
                                     <option
                                             th:each="contact : ${contacts}"
                                             th:text="${contact.getUserContact().getFirstName()+ ' '+ contact.getUserContact().getLastName()}"
@@ -102,26 +116,21 @@
                                     </option>
                                 </select>
                             </div>
-
+                            <!-- Selector amount to contact transaction-->
+                            <div class="col input-group">
+                                <input class="form-control" placeholder="Amount"  th:name="amount"
+                                       type="number" step="0.01" >
+                                <span class="input-group-text">€</span>
+                            </div>
                             <!-- Champ Description-->
                             <div class="col">
                                 <input class="form-control" placeholder="Description" th:name="description"
                                        type="text">
                             </div>
-
-                            <!-- Selector amount to contact transaction-->
-                            <div class="col input-group">
-                                <!-- <input class="form-control" placeholder="Amount"  th:name="amount"-->
-                                <input class="form-control" placeholder="Amount"
-                                       type="number" step="0.01" >
-                                <span class="input-group-text">€</span>
-                            </div>
-
                             <!-- Pay Bouton -->
                             <div class="col text-center">
                                 <button class="col-10 btn btn-success " type="submit">Pay</button>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -129,43 +138,39 @@
             </div>
         </div>
 
+
         <!-- Table of transaction -->
 
-        <!--<hr class="text-white">-->
         <div class="row">
-                        <h4 class=" text-dark " style="margin-left:25px; margin-top: 20px;">My transactions</h4>
-                    </div>
+            <h4 class=" text-dark " style="margin-left:25px; margin-top: 20px;">My transactions</h4>
+        </div>
 
 
-                    <!--<hr class="text-white">-->
-                    <div class="row justify-content-center" >
-                        <div class="col-12">
-                            <table class="table table-striped text-center table-sm " style="border: 2px solid #343A40!important;">
-                                <thead style="background-color: #28A745; ">
-                    <tr style="color: white; line-height: 60px; min-height: 60px; height: 60px;">
-                        <th class="text-center">Connections</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="transaction : ${transactions}">
-                        <td th:text="${transaction.getRecipientUser().getFirstName() + ' '+ transaction.getRecipientUser().getLastName()}"></td>
-                        <td th:text="${transaction.getDescription()}"></td>
-                        <td th:text="${transaction.getAmount()}+'€'"></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+        <div class="row justify-content-center" >
+            <div class="col-12">
+                <table class="table table-striped text-center table-sm " style="border: 2px solid #343A40!important;">
+                    <thead style="background-color: #28A745; ">
+                        <tr style="color: white; line-height: 60px; min-height: 60px; height: 60px;">
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Sender</th>
+                            <th class="text-center">Recipient</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="transaction : ${transactions}">
+                            <td th:text="${transaction.getDate()}"></td>
+                            <td th:text="${transaction.getSenderUser().getFirstName() + ' '+ transaction.getSenderUser().getLastName()}"></td>
+                            <td th:text="${transaction.getRecipientUser().getFirstName() + ' '+ transaction.getRecipientUser().getLastName()}"></td>
+                            <td th:text="${transaction.getAmountTransaction()}+'€'"></td>
+                            <td th:text="${transaction.getDescription()}"></td>
+                        </tr>
                     </tbody>
 
                 </table>
             </div>
         </div>
     </div>
-
-</div>
 </body>
 </html>

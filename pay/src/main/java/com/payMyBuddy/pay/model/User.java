@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+
 @Entity   // Indique que la classe correspond à une table de la base de données
 @DynamicUpdate  // Si un Update d'une ligne de la table evite de faire un update de tous les attributs mais que celui qui est modifié
 @Table(name = "user")  // Indique le nom de la table associée permet de faire une association entre une Classe et une Table de la DB
@@ -69,7 +71,7 @@ public class User implements Serializable, UserDetails {
         this.email = email;
         this.password = password;
         this.balance = balance;
-        this.account     = account;
+        this.account = account;
         this.contactList = contactList;
         this.enabled = enabled;
         this.role = role;

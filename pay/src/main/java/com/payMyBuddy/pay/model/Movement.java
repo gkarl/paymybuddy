@@ -19,7 +19,7 @@ public class Movement implements Serializable {
 
     @NotBlank
     @Column(name = "amount")
-    private Double amount;
+    private Double amountMovement;
 
     @NotBlank
     @Column(name = "date")
@@ -48,12 +48,12 @@ public class Movement implements Serializable {
         this.id = id;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getAmountMovement() {
+        return amountMovement;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setAmountMovement(Double amountMovement) {
+        this.amountMovement = amountMovement;
     }
 
     public LocalDate getDate() {

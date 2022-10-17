@@ -9,6 +9,7 @@ import lombok.Data;
 import org.apache.maven.lifecycle.internal.LifecycleStarter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,11 @@ public class UserController {
     // "users" est la variable qui sera utilisé en Front pour accéder au attribut du model
     // return "index" est le file html utilisé en Front
     @GetMapping("/users")
-    public String findAllUsers(Model model) {
+    public String findAllUsers(@AuthenticationPrincipal User user, Model model) {
         List<User> listUser = userService.findAllUsers();
         model.addAttribute("users", listUser); // addAttribute() permet d’ajouter à mon Model un objet
+        model.addAttribute("firstName", user.getFirstName());
+        model.addAttribute("lastName", user.getLastName());
         return "user";
     }
 

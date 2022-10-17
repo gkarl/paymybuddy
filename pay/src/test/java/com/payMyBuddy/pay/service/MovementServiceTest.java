@@ -76,7 +76,7 @@ public class MovementServiceTest {
         Movement movement = new Movement();
         movement.setId(1);
         movement.setDate(LocalDate.now());
-        movement.setAmount(50000.0);
+        movement.setAmountMovement(50000.0);
         movement.setUser(user1);
 
         when(movementRepository.findById(1)).thenReturn(Optional.of(movement));

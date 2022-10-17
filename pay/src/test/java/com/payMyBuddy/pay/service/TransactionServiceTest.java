@@ -64,7 +64,7 @@ public class TransactionServiceTest {
         Transaction transaction = new Transaction();
         transaction.setId(1);
         transaction.setDate(LocalDate.now());
-        transaction.setAmount(100.0);
+        transaction.setAmountTransaction(100.0);
         transaction.setDescription("Rembousement de frais");
         transaction.setSenderUser(new User());
         transaction.setRecipientUser(new User());
@@ -116,7 +116,7 @@ public class TransactionServiceTest {
         transaction.setDate(LocalDate.now());
         transaction.setSenderUser(user1);
         transaction.setRecipientUser(user1);
-        transaction.setAmount(100.0);
+        transaction.setAmountTransaction(100.0);
         transaction.setId(1);
         transaction.setDescription("Rembousement de frais");
 

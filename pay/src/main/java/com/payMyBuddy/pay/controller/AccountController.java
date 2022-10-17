@@ -28,13 +28,9 @@ public class AccountController {
         return accountService.findAccountByEmail(email);
     }
 
-   /* @GetMapping(value = "/{id}")
-    public Account findAccountById(@PathVariable Integer id) {
-        return accountService.findAccountById(id);
-    }*/
 
 
-   /* @GetMapping(value = "/addAccount")
+    @GetMapping(value = "/addAccount")
     public String addAccount(Model model) {
         Account account = new Account();
         model.addAttribute(account);
@@ -52,5 +48,5 @@ public class AccountController {
     public String deleteContactById(@RequestParam("accountId") Integer id) {
         accountService.deleteAccountById(id);
         return "redirect:/users";
-    }*/
+    }
 }

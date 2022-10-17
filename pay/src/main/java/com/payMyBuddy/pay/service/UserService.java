@@ -68,7 +68,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-
+//*******************************
 
 
     public Optional<User> findById(Integer id) {
@@ -102,7 +102,6 @@ public class UserService implements UserDetailsService {
         user.get().setLastName(userUpdate.getLastName());
         user.get().setEmail(userUpdate.getEmail());
         user.get().setPassword(userUpdate.getPassword());
-        //return userRepository.save(user.get());
         userRepository.save(user.get());
     }
 

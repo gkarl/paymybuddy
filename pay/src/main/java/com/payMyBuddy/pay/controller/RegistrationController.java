@@ -25,6 +25,8 @@ public class RegistrationController {
         return "registration";
     }
 
+
+    //******************
     @PostMapping(value = "/save")
     public String addUser(@Valid @ModelAttribute("user") User user, Model model) throws NotCreateUserPossibleException {
         userService.saveUser(user);

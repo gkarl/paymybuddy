@@ -27,7 +27,7 @@ public class MovementService {
     @Autowired
     AccountRepository accountRepository;
 
-    /*@Autowired
+ /*   @Autowired
     MovementService movementService;*/
 
     public List<Movement> findAllMovement(){
