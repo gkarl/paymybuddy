@@ -1,11 +1,13 @@
 package com.payMyBuddy.pay.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@DynamicUpdate
 @Table(name = "user_contacts")
 public class Contact implements Serializable {
 

@@ -13,7 +13,8 @@ CREATE TABLE user
     enabled BOOLEAN DEFAULT 1,
     role VARCHAR(50),
     PRIMARY KEY (id)
-);
+)
+    ENGINE = InnoDB;
 
 CREATE TABLE account
 (
@@ -23,7 +24,8 @@ CREATE TABLE account
     user_id INT NOT NULL,
     PRIMARY KEY (id)
 
-);
+)
+    ENGINE = InnoDB;
 
 CREATE TABLE movement
 (
@@ -33,7 +35,8 @@ CREATE TABLE movement
     user_id INT NOT NULL,
     account_id INT NOT NULL,
     PRIMARY KEY (id)
-);
+)
+    ENGINE = InnoDB;
 
 CREATE TABLE transaction
 (
@@ -44,7 +47,8 @@ CREATE TABLE transaction
     sender_user_id INT,
     recipient_user_id INT,
     PRIMARY KEY (id)
-);
+)
+    ENGINE = InnoDB;
 
 CREATE TABLE user_contacts
 (
@@ -52,7 +56,8 @@ CREATE TABLE user_contacts
     user_contact_id INT NOT NULL,
     user_id INT NOT NULL,
     PRIMARY KEY (id)
-);
+)
+    ENGINE = InnoDB;
 
 ALTER TABLE account ADD CONSTRAINT user_account_fk FOREIGN KEY (user_id) references user (id) on DELETE no action on UPDATE no action;
 

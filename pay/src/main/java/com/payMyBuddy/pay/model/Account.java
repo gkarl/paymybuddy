@@ -9,14 +9,14 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
-@DynamicUpdate
+//@DynamicUpdate
 @Table(name = "account")
 public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @NotBlank
     @Column(name = "iban")
@@ -46,11 +46,7 @@ public class Account implements Serializable {
         this.user = user;
     }
 
-
-
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;

@@ -38,6 +38,7 @@ public class MovementService {
         return movementRepository.findById(id).orElseThrow(() -> new NotFoundException("Movement doesn't exist"));
     }
 
+    // transférer de l'argent de son compte en banque vers l'application Paymybuddy sur la page Profil
     public void transfertToApplication(String emailUser, Double amountMovement) {
         User user = userRepository.findUsersByEmail(emailUser);
         user.setBalance(user.getBalance() + amountMovement);
@@ -47,6 +48,7 @@ public class MovementService {
         accountRepository.save(account);
     }
 
+    // transférer de l'agent de son compte PaymyBuddy (balance) vers son compte en banque
     public void transferToAccountBank(String emailUser, Double amountMovement) {
         User user = userRepository.findUsersByEmail(emailUser);
         user.setBalance(user.getBalance() - amountMovement);

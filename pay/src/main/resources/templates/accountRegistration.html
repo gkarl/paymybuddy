@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Account Management System</title>
+    <link rel="icon" href="data:,">
+    <!-- Meta tags -->
+    <link
+            crossorigin="anonymous"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            rel="stylesheet"
+    >
+</head>
+<body class="h-100">
+<nav class="navbar navbar-dark navbar expand" style="background-color: #e9ecef">
+    <div class="container">
+        <div class="navbar-brand bg-success" style="padding: 10px; border-radius: 5px">
+            User Management System
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <hr>
+    <h3>Save Account</h3>
+    <form action="#" th:action="@{/accounts/save}" method="get">
+        <br>
+        <input type="text" th:name = "iban"
+               placeholder="iban"
+               class ="form-control mb-4 col-3">
+        <button type="submit" class="btn btn-info col-1"> Save</button>
+
+        <a style="padding-left: 120px" th:href="@{/profile}">return to Profile</a>
+    </form>
+</div>
+
+</body>
+</html>

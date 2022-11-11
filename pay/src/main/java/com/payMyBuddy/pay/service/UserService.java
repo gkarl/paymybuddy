@@ -3,6 +3,7 @@ package com.payMyBuddy.pay.service;
 import com.payMyBuddy.pay.exception.NotCreateUserPossibleException;
 import com.payMyBuddy.pay.exception.NotFoundException;
 import com.payMyBuddy.pay.model.Contact;
+import com.payMyBuddy.pay.model.Transaction;
 import com.payMyBuddy.pay.model.User;
 import com.payMyBuddy.pay.repository.ContactRepository;
 import com.payMyBuddy.pay.repository.UserRepository;
@@ -11,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -47,6 +52,18 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    // pagination
+    public Page<User> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.userRepository.findAll(pageable);
+    }
+
+    /*public Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.userRepository.findAll(pageable);
+    }*/
+
     public User findUserByIdForm(Integer id) throws NotFoundException {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
@@ -59,7 +76,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void deleteUserByID(Integer id) throws NotFoundException {
+    public void deleteUser(Integer id) throws NotFoundException {
         Long count = userRepository.countById(id);
         if (count == null || count == 0) {
             throw  new NotFoundException("Cet ID n'a pas été trouvé " + id);
@@ -78,7 +95,9 @@ public class UserService implements UserDetailsService {
     public User findUserByEmail(String email) throws NotFoundException{
         return userRepository.findByEmail(email);
     }
-    
+
+    // Quand on s'enregistre comme nouvelle utilisateur au lancement de l'application
+    // Permet de sauver les données entré dans le formulaire de ce nouvelle user
     public void saveUser(User user) throws NotCreateUserPossibleException {
         if(user.getFirstName() != "" && user.getLastName() != "" && user.getEmail() != "" && user.getPassword()  != ""){
             List<Contact> contactList = new ArrayList<>();
@@ -109,14 +128,22 @@ public class UserService implements UserDetailsService {
         userRepository.deleteByEmail(email);
     }
 
+    // quand va à la page transfer
+    // => recherche les contact de l'user principale grace à son email
+    // (2em liste page transfer)
+    // se lance aussi quand ajoute un nouveau contact
     public List<Contact> findContactByUserEmail(String email) {
         return contactRepository.findContactByUserEmail(email);
     }
 
+    // Se lance quand on navigue vers la page Profile 2
     public List<Contact> findContactByUserId(Integer id) {
         return contactRepository.findContactByUserId(id);
     }
 
+    // Quand user navigue vers la page Transfer
+    // => Affiche la liste des user de l'appli excepté l'user principale pour lui permettre de rajouter un contact par la suite
+    // sur la page transfer 1ere liste choix d'un nouveau contact
     public List<User> findUsersExceptUserPrincipal(String email) {
         List<User> userList = userRepository.findAll();
         User user = userRepository.findUsersByEmail(email);
@@ -127,6 +154,8 @@ public class UserService implements UserDetailsService {
         return userList;
     }
 
+    // Quand fait "Add Contact sur la page Transfer
+    // permet de sauver un nouveau contact choisit dans une liste déroulante à attribuer à user principal
     public void saveContact(Integer userId, Integer idContact) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User don't exist"));
         User contact = userRepository.findById(idContact).orElseThrow(() -> new NotFoundException("User don't exist"));
@@ -136,6 +165,7 @@ public class UserService implements UserDetailsService {
         Contact contact1 = new Contact();
         contact1.setUser(user);
         contact1.setUserContact(contact);
+        userRepository.findById(userId);
         contactRepository.save(contact1);
     }
 
@@ -143,8 +173,11 @@ public class UserService implements UserDetailsService {
         contactRepository.deleteContactById(contactId);
     }
 
+    // méthode de l'interface UserDetailsService utilisé par Spring Security utilisé au moment ou un utilisateur se log à l'appli avec son email et mot de passe
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
     }
+
+
 }

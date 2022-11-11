@@ -18,6 +18,8 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
+    // quand clic enregistrement on est redirigé vers la page /registration fait appel à la page registration.html
+    // une nouvelle intance de user est crée des l'arrivé sur le formulaire
     @GetMapping(value = "/registration")
     public String addUser(Model model) {
         User user = new User();
@@ -26,13 +28,14 @@ public class RegistrationController {
     }
 
 
-    //******************
+    // sauver les info entré dans le formulaire pour un nouvel user qui s'enregistre
     @PostMapping(value = "/save")
     public String addUser(@Valid @ModelAttribute("user") User user, Model model) throws NotCreateUserPossibleException {
         userService.saveUser(user);
         return "redirect:/login";
     }
 
+    // retourner à la page login avec s'etre enregistré comme nouvel user
     @GetMapping(value = "/login")
     public String login(Model model) {
         return "login";

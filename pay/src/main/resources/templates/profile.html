@@ -6,7 +6,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <meta charset="utf-8">
 
@@ -79,9 +79,9 @@
                     <tr th:each="account : ${accounts}">
                         <td th:text="${account.getIban()}"></td>
                         <td class="text-white justify-content-cente">
-                            <a th:href="@{/accounts/deleteAccount(accountId=${account.getId()})}"
-                               class="btn btn-danger">Delete
-                            </a>
+                           <!-- <a th:href="@{/accounts/deleteAccount(accountId=${account.getId()})}" class="btn btn-danger">Delete</a>-->
+                            <!--<a th:href="@{'/accounts/deleteAccount/' + ${account.id}}" class="btn btn-danger">Delete</a>-->
+                            <button type="button" class="btn btn-danger h6" ><a class="h6" th:href="@{'/accounts/deleteAccount/'+ ${account.id}}" style="text-decoration: none; color: white">Delete</a></button>
                         </td>
                     </tr>
                     </tbody>
@@ -92,7 +92,7 @@
 
 
 
-    <!--  transfer account to application -->
+    <!--  transfer depuis account vers l'application -->
     <div class="col-12">
         <h3 class="text-dark fw-light mb-4">Transfer to balance</h3>
         <div align="center">
@@ -122,7 +122,7 @@
         </div>
     </div>
     <br>
-    <!--Selector transfer from application to account -->
+    <!-- transfer depuis l'application to account -->
     <div class="col">
         <h3 class="text-dark fw-light mb-4">Transfer to account</h3>
         <div align="center">
@@ -132,7 +132,7 @@
                 <div class="row">
                     <div class="col-4 align-middle">
                         <select class="form-select" th:name="accounts">
-                            <option selected>Select a account to recharge your Account
+                            <option selected>Select a account to recharge Account
                             <option
                                     th:each="account : ${accounts}"
                                     th:text="${account.getIban()}"
@@ -153,7 +153,7 @@
     </div>
     <br>
 
-    <!-- Contact List Action -->
+    <!-- Contacts List -->
     <div class="col">
         <h3 class="text-dark fw-light my-4">Contacts list</h3>
     </div>
@@ -173,9 +173,8 @@
                             th:text="${contact.getUserContact().getFirstName() + ' ' + contact.getUserContact().getLastName()}">
                     </td>
                     <td class="text-white">
-                        <a th:href="@{/user/deleteContact(contactId=${contact.getId()})}"
-                           class="btn btn-danger">Delete
-                        </a>
+                        <!--<a th:href="@{/user/deleteContact(contactId=${contact.getId()})}" class="btn btn-danger">Delete</a>-->
+                        <button type="button" class="btn btn-danger h6" ><a class="h6" th:href="@{'/user/deleteContact/'+ ${contact.id}}" style="text-decoration: none; color: white">Delete</a></button>
                     </td>
                 </tr>
                 </tbody>

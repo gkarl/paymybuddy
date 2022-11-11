@@ -8,6 +8,7 @@ import com.payMyBuddy.pay.service.UserService;
 import lombok.Data;
 import org.apache.maven.lifecycle.internal.LifecycleStarter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -36,18 +37,59 @@ public class UserController {
     // Afficher all user en mode appli web
     // URL /users est ou sera afficher tous les user
     // "users" est la variable qui sera utilisé en Front pour accéder au attribut du model
-    // return "index" est le file html utilisé en Front
-    @GetMapping("/users")
+    /*@GetMapping("/users")
     public String findAllUsers(@AuthenticationPrincipal User user, Model model) {
         List<User> listUser = userService.findAllUsers();
         model.addAttribute("users", listUser); // addAttribute() permet d’ajouter à mon Model un objet
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
         return "user";
+    }*/
+
+    // endpoints page users mais avec pagination
+    @GetMapping("/users")
+    public String findAllUsers(@AuthenticationPrincipal User user, Model model) {
+        //model.addAttribute("firstName", user.getFirstName());
+        //model.addAttribute("lastName", user.getLastName());
+        return findPaginated(1, model);
     }
 
+    // Pagination transaction table ok sans sort
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+        Page<User> page = userService.findPaginated(pageNo, pageSize);
+        List<User> users = page.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("users", users);
+        return "user";
+    }
+
+    // pagination avec sorting
+/*    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
+        int pageSize = 5;
+        Page<User> page = userService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<User> users = page.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("users", users);
+        return "user";
+    }*/
 
 
+    // pas besoin
     @GetMapping("users/{id}")
     public String findUserById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("user", userService.findUserByIdForm(id));
@@ -96,9 +138,9 @@ public class UserController {
 
     // delete un user
     @GetMapping("users/delete/{id}")
-    public String deleteUserForm(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
-            userService.deleteUserByID(id);
+            userService.deleteUser(id);
         } catch (NotFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
@@ -127,10 +169,23 @@ public class UserController {
         return userService.findContactByUserEmail(email);
     }
 
-    @GetMapping(value = "/deleteContact")
+    // End point quand on veut delet un contact sur la page Profil
+   /* @GetMapping(value = "/deleteContact")
     public String deleteContact(@RequestParam("contactId") Integer contactId) {
         userService.deleteContactById(contactId);
         return "redirect:/profile";
+    }*/
+
+
+    @GetMapping("/user/deleteContact/{id}")
+    public String deleteContactUser(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            userService.deleteContactById(id);
+        } catch (NotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/profile";
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.payMyBuddy.pay.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -32,7 +33,7 @@ public class Transaction {
 
 
     @OneToOne
-    @JsonIgnoreProperties
+    @JsonIgnore
     @JoinColumn(name = "sender_user_id") // pour faire l'association avec la clé étrangére sender_user_id dans la table transaction
     private User senderUser;
 
@@ -40,8 +41,8 @@ public class Transaction {
     @OneToOne(
             fetch = FetchType.EAGER // Lorsqu'on va récupérer la transaction, l'user associés est récupéré
     )
-    @JsonIgnoreProperties({"id", "last_name", "email", "password", "balance", "account", "contactList"})
     @JoinColumn(name = "recipient_user_id")  // pour faire l'association avec la clé étrangére recipient_user_id dans la table transaction
+    @JsonIgnoreProperties({"id", "last_name", "email", "password", "balance", "account", "contactList"})
     private User recipientUser;
 
 

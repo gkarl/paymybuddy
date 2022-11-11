@@ -19,23 +19,24 @@ import java.util.Optional;
 public class MovementController {
 
     @Autowired
-    MovementService movementservice;
+    MovementService movementService;
 
     @GetMapping
     public List<Movement> findAllMovements() {
-        return movementservice.findAllMovement();
+        return movementService.findAllMovement();
     }
 
-
+    // transférer de l'argent de son compte en banque vers l'application Paymybuddy
     @GetMapping(value = "/transferToApplication")
     public String transferToApplication(@AuthenticationPrincipal User user, @RequestParam(value= "amount") Double amountMovement) {
-        movementservice.transfertToApplication(user.getEmail(), amountMovement);
+        movementService.transfertToApplication(user.getEmail(), amountMovement);
         return "redirect:/profile";
     }
 
+    // transférer de l'agent de son compte PaymyBuddy (balance) vers son compte en banque
     @GetMapping(value = "/transferToAccountBank")
     public String transferToAccountBank(@AuthenticationPrincipal User user,  @RequestParam(value= "amount") Double amountMovement) {
-        movementservice.transferToAccountBank(user.getEmail(), amountMovement);
+        movementService.transferToAccountBank(user.getEmail(), amountMovement);
         return "redirect:/profile";
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" href="data:,">
     <!--<link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -86,9 +86,24 @@
                 <thead style="background-color: #28A745; ">
                 <tr style="color: white; line-height: 60px; min-height: 60px; height: 60px;">
                     <th>ID</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Email</th>
+                    <th>
+                        Prénom
+                       <!-- <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                            Prénom
+                        </a>-->
+                    </th>
+                    <th>
+                        Nom
+                        <!--<a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                            Nom
+                        </a>-->
+                    </th>
+                    <th>
+                        Email
+                       <!-- <a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
+                            Email
+                        </a>-->
+                    </th>
                     <!--<th>Password</th>-->
                     <th>Balance</th>
                     <th>Role</th>
@@ -121,6 +136,31 @@
                     </tr>
                 </tbody>
             </table>
+
+
+            <div th:if = "${totalPages > 1}">
+                <div class = "row col-sm-10">
+                    <div class = "col-sm-2">Total Rows: [[${totalItems}]] </div>
+                    <div class = "col-sm-1">
+                        <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                             <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+                            <!--<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
+                            <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                        </span>
+                    </div>
+                    <div class = "col-sm-1">
+                        <a th:if="${currentPage < totalPages}"  th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+                      <!--  <a th:if="${currentPage < totalPages}"  th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>-->
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+                        <!--<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>-->
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
