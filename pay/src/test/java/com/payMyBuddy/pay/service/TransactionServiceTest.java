@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {TransactionService.class})
@@ -46,9 +44,12 @@ public class TransactionServiceTest {
     @InjectMocks
     private TransactionService transactionService;
 
+    @InjectMocks
+    private UserService userService;
+
     @BeforeEach
     void setup() {
-        accountService = new AccountService(accountRepository, userRepository);
+        accountService = new AccountService(accountRepository, userService);
     }
 
     @Test
@@ -126,45 +127,4 @@ public class TransactionServiceTest {
     }
 
 
-   /* @Test
-    @DisplayName("Test transfer")
-    public  void transferTest() {
-        User user1 = new User();
-        Account account1 = new Account();
-        user1.setId(1);
-        user1.setFirstName("Karl");
-        user1.setLastName("Gavillot");
-        user1.setEmail("karl@gmail.com");
-        user1.setPassword("P77711741@");
-        user1.setBalance(50000.00);
-        user1.setAccount(new Account());
-        user1.setRole("USER");
-        user1.setContactList(new ArrayList<Contact>());
-        user1.setEnabled(true);
-        account1.setId(1);
-        account1.setIban("FR9960001009530067891234001");
-        account1.setBalance(100.00);
-        account1.setUser(user1);
-
-        User user2 = new User();
-        Account account2 = new Account();
-        user2.setId(2);
-        user2.setFirstName("Carlen");
-        user2.setLastName("Laurent");
-        user2.setEmail("carlen@gmail.com");
-        user2.setPassword("P45061284@");
-        user2.setBalance(3000.00);
-        user2.setAccount(new Account());
-        user2.setRole("USER");
-        user2.setContactList(new ArrayList<Contact>());
-        user2.setEnabled(true);
-        account2.setId(2);
-        account2.setIban("FR9960001009530067891234002");
-        account2.setBalance(3000.00);
-        account2.setUser(user2);
-
-        when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
-        assertThrows(RuntimeException.class, () -> transactionService.transfer("karl@gmail.com", "carlen@gmail.com", LocalDate.now(), 100.0, "Rembousement de frais"));
-        verify(userRepository, times(2)).findByEmail(anyString());
-    }*/
 }

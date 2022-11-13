@@ -4,31 +4,30 @@ import com.payMyBuddy.pay.exception.NotFoundException;
 import com.payMyBuddy.pay.model.Account;
 import com.payMyBuddy.pay.model.Movement;
 import com.payMyBuddy.pay.model.User;
-import com.payMyBuddy.pay.repository.AccountRepository;
 import com.payMyBuddy.pay.repository.MovementRepository;
-import com.payMyBuddy.pay.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Transactional
 public class MovementService {
 
     @Autowired
     MovementRepository movementRepository;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
 
- /*   @Autowired
-    MovementService movementService;*/
+
+    public MovementService(MovementRepository movementRepository, UserService userService) {
+        this.movementRepository = movementRepository;
+        this.userService = userService;
+    }
 
     public List<Movement> findAllMovement(){
         return movementRepository.findAll();
@@ -39,22 +38,24 @@ public class MovementService {
     }
 
     // transférer de l'argent de son compte en banque vers l'application Paymybuddy sur la page Profil
+    @Transactional
     public void transfertToApplication(String emailUser, Double amountMovement) {
-        User user = userRepository.findUsersByEmail(emailUser);
+        User user = userService.findUsersByEmail(emailUser);
         user.setBalance(user.getBalance() + amountMovement);
-        userRepository.save(user);
-        Account account = accountRepository.findAccountByUserEmail(emailUser);
+        userService.save(user);
+        Account account = accountService.findAccountByUserEmail(emailUser);
         account.setBalance(account.getBalance() - amountMovement);
-        accountRepository.save(account);
+        accountService.save(account);
     }
 
     // transférer de l'agent de son compte PaymyBuddy (balance) vers son compte en banque
+    @Transactional
     public void transferToAccountBank(String emailUser, Double amountMovement) {
-        User user = userRepository.findUsersByEmail(emailUser);
+        User user = userService.findUsersByEmail(emailUser);
         user.setBalance(user.getBalance() - amountMovement);
-        userRepository.save(user);
-        Account account = accountRepository.findAccountByUserEmail(emailUser);
+        userService.save(user);
+        Account account = accountService.findAccountByUserEmail(emailUser);
         account.setBalance(account.getBalance() + amountMovement);
-        accountRepository.save(account);
+        accountService.save(account);
     }
 }

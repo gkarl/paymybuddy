@@ -2,11 +2,8 @@ package com.payMyBuddy.pay.controller;
 
 import com.payMyBuddy.pay.exception.NotFoundException;
 import com.payMyBuddy.pay.model.Contact;
-import com.payMyBuddy.pay.model.Transaction;
 import com.payMyBuddy.pay.model.User;
 import com.payMyBuddy.pay.service.UserService;
-import lombok.Data;
-import org.apache.maven.lifecycle.internal.LifecycleStarter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -14,43 +11,21 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-// @Data  // je n’ai plus besoin d’écrire les getters et setters
-@Controller
-//@RequestMapping("/user")
-public class UserController {
 
-    //Logger logger = LoggerFactory.getLogger(Controller.class);
+@Controller
+public class UserController {
 
     @Autowired
     UserService userService;
 
-
-
-
-    // Afficher all user en mode appli web
-    // URL /users est ou sera afficher tous les user
-    // "users" est la variable qui sera utilisé en Front pour accéder au attribut du model
-    /*@GetMapping("/users")
-    public String findAllUsers(@AuthenticationPrincipal User user, Model model) {
-        List<User> listUser = userService.findAllUsers();
-        model.addAttribute("users", listUser); // addAttribute() permet d’ajouter à mon Model un objet
-        model.addAttribute("firstName", user.getFirstName());
-        model.addAttribute("lastName", user.getLastName());
-        return "user";
-    }*/
-
     // endpoints page users mais avec pagination
     @GetMapping("/users")
     public String findAllUsers(@AuthenticationPrincipal User user, Model model) {
-        //model.addAttribute("firstName", user.getFirstName());
-        //model.addAttribute("lastName", user.getLastName());
         return findPaginated(1, model);
     }
 
@@ -67,37 +42,12 @@ public class UserController {
         return "user";
     }
 
-    // pagination avec sorting
-/*    @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
-        int pageSize = 5;
-        Page<User> page = userService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<User> users = page.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("users", users);
-        return "user";
-    }*/
-
-
     // pas besoin
     @GetMapping("users/{id}")
     public String findUserById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("user", userService.findUserByIdForm(id));
+        model.addAttribute("user", userService.findById(id));
         return "user-details";
     }
-
-
-
 
     // définit l'URL de la page du formulaire pour créer un nouvelle user et la variable qui permet de récupérer les attribut du model
     @GetMapping("users/new")
@@ -106,7 +56,6 @@ public class UserController {
         model.addAttribute("pageTitle", "Add New User");
         return "user_form";
     }
-
 
     // Create user en mode web Appli
     // "user/save" correspond à l'action défini au niveau du formulaire afin d'utiliser cette methode pour créer un user
@@ -120,12 +69,11 @@ public class UserController {
         return "redirect:/users";
     }
 
-
     // edit un user
     @GetMapping("users/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         try {
-            User user = userService.findUserByIdForm(id);
+            Optional<User> user = userService.findById(id);
             model.addAttribute("user", user);
             model.addAttribute("pageTitle", "Edit user (ID: " + id + ")");
             return "user_form";
@@ -134,7 +82,6 @@ public class UserController {
             return "redirect:/users";
         }
     }
-
 
     // delete un user
     @GetMapping("users/delete/{id}")
@@ -168,14 +115,6 @@ public class UserController {
     public List<Contact> findContactByUserEmail(@PathVariable String email) {
         return userService.findContactByUserEmail(email);
     }
-
-    // End point quand on veut delet un contact sur la page Profil
-   /* @GetMapping(value = "/deleteContact")
-    public String deleteContact(@RequestParam("contactId") Integer contactId) {
-        userService.deleteContactById(contactId);
-        return "redirect:/profile";
-    }*/
-
 
     @GetMapping("/user/deleteContact/{id}")
     public String deleteContactUser(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {

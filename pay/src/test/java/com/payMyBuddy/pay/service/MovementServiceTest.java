@@ -46,9 +46,12 @@ public class MovementServiceTest {
     @InjectMocks
     private MovementService movementService;
 
+    @InjectMocks
+    private UserService userService;
+
     @BeforeEach
     void setup() {
-        accountService = new AccountService(accountRepository, userRepository);
+        accountService = new AccountService(accountRepository, userService);
     }
 
     @Test

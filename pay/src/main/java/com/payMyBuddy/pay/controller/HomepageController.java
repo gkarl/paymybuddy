@@ -5,17 +5,12 @@ import com.payMyBuddy.pay.service.AccountService;
 import com.payMyBuddy.pay.service.TransactionService;
 import com.payMyBuddy.pay.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HomepageController {
@@ -51,7 +46,7 @@ public class HomepageController {
     public String transferPage(@AuthenticationPrincipal User user, Model model) {
         List<Transaction> transactions = transactionService.findTransactionsOfUserPrincipal(user);
         List<Contact> contactList = userService.findContactByUserEmail(user.getEmail());
-        user = userService.findUserByEmail(user.getEmail());
+        /*user = userService.findUserByEmail(user.getEmail());*/
         user = userService.findById(user.getId()).orElse(null);
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
@@ -62,19 +57,6 @@ public class HomepageController {
         return "transfer" ;
     }
 
-
-    // pagination transactions page transfer
-   /* @GetMapping("/page/{pageNo}")
-    public String findPaginatedTransfer(@PathVariable(value = "pageNo") int pageNo, Model model) {
-        int pageSize = 5;
-        Page<User> page = userService.findPaginatedTransfer(pageNo, pageSize);
-        List<User> transactions = page.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("transactions", transactions);
-        return "transfer";
-    }*/
 
 
     // Affiche le contenu de la page profil
@@ -90,27 +72,5 @@ public class HomepageController {
         return "profile";
     }
 
-    // Pagination transaction table
-    /*@GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
-        int pageSize = 5;
-
-        Page<Transaction> page = transactionService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Transaction> listTransactions = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("listTransactions", listTransactions);
-        return "transfer";
-    }*/
 
 }

@@ -79,8 +79,6 @@
                     <tr th:each="account : ${accounts}">
                         <td th:text="${account.getIban()}"></td>
                         <td class="text-white justify-content-cente">
-                           <!-- <a th:href="@{/accounts/deleteAccount(accountId=${account.getId()})}" class="btn btn-danger">Delete</a>-->
-                            <!--<a th:href="@{'/accounts/deleteAccount/' + ${account.id}}" class="btn btn-danger">Delete</a>-->
                             <button type="button" class="btn btn-danger h6" ><a class="h6" th:href="@{'/accounts/deleteAccount/'+ ${account.id}}" style="text-decoration: none; color: white">Delete</a></button>
                         </td>
                     </tr>
@@ -173,7 +171,6 @@
                             th:text="${contact.getUserContact().getFirstName() + ' ' + contact.getUserContact().getLastName()}">
                     </td>
                     <td class="text-white">
-                        <!--<a th:href="@{/user/deleteContact(contactId=${contact.getId()})}" class="btn btn-danger">Delete</a>-->
                         <button type="button" class="btn btn-danger h6" ><a class="h6" th:href="@{'/user/deleteContact/'+ ${contact.id}}" style="text-decoration: none; color: white">Delete</a></button>
                     </td>
                 </tr>

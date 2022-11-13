@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -123,7 +122,6 @@ public class UserServiceTest {
         when(userRepository.findByEmail(any(String.class))).thenReturn(user1);
 
         assertEquals(userService.findUserByEmail("").getEmail(), "karl@gmail.com");
-
     }
 
     @Test
@@ -166,19 +164,6 @@ public class UserServiceTest {
         userService.deleteUserByEmail("karl@gmail.com");
         verify(userRepository).deleteByEmail("karl@gmail.com");
     }
-
-   /* @Test
-    @DisplayName("Test findContactByUserEmail")
-    public  void findContactByUserEmailTest() {
-        List<Contact> contactList = new ArrayList<>();
-        when(contactRepository.findContactByUserEmail(any(String.class))).thenReturn(contactList);
-        List<Contact> contactList2 = userService.findContactByUserEmail("karl@gmail.com");
-
-        assertSame(contactList, contactList2);
-        assertTrue(contactList2.isEmpty());
-        verify(this.contactRepository).findContactByUserEmail(anyString());
-        assertTrue(this.userService.findAllUsers().isEmpty());
-    }*/
 
     @Test
     @DisplayName("Test findUsersExceptUserPrincipal")

@@ -5,7 +5,6 @@ import com.payMyBuddy.pay.model.Account;
 import com.payMyBuddy.pay.model.User;
 import com.payMyBuddy.pay.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +32,6 @@ public class AccountController {
         return accountService.findAccountByEmail(email);
     }
 
-
-
     // Affiche la page pour enregistrer l'IBAN d'un compte en banque
     // => clic "Add Iban Account"
     @GetMapping(value = "/addAccount")
@@ -52,21 +49,7 @@ public class AccountController {
         return "redirect:/profile";
     }
 
-    // 2em méthode pour sauver un IBAN Ok
-   /* @GetMapping(value = "/save")
-    public String saveAccount(@AuthenticationPrincipal User user, @RequestParam(value = "iban", required = false) String iban) {
-        //account.setUser(user);
-        accountService.saveAccount(user.getId(), iban);
-        return "redirect:/profile";
-    }*/
-
-    // supprimer un compte
-    /*@DeleteMapping(value = "/deleteAccount")
-    public String deleteContactById(@RequestParam("accountId") Integer id) {
-        accountService.deleteAccountById(id);
-        return "redirect:/profile";
-    }*/
-
+    // delet un iban
     @GetMapping(value = "/deleteAccount/{id}")
     public String deleteContactById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {

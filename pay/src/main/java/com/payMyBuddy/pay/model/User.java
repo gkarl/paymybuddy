@@ -1,10 +1,8 @@
 package com.payMyBuddy.pay.model;
 
-import org.hibernate.annotations.DynamicUpdate;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

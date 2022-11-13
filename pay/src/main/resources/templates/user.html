@@ -6,15 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:,">
-    <!--<link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">-->
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 
@@ -88,23 +79,13 @@
                     <th>ID</th>
                     <th>
                         Prénom
-                       <!-- <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
-                            Prénom
-                        </a>-->
                     </th>
                     <th>
                         Nom
-                        <!--<a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
-                            Nom
-                        </a>-->
                     </th>
                     <th>
                         Email
-                       <!-- <a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
-                            Email
-                        </a>-->
                     </th>
-                    <!--<th>Password</th>-->
                     <th>Balance</th>
                     <th>Role</th>
                     <th>Enabled</th>
@@ -116,14 +97,10 @@
                         <td colspan="3">Aucun utilisateur</td>
                     </tr>
                     <tr th:each="user: ${users}">
-                        <!--<td >
-                            <a href="/user/$(user.id)" th:text="${user.firstName}"/>
-                        </td>-->
                         <td th:text="${user.id}"></td>
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>
                         <td th:text="${user.email}"></td>
-                        <!--<td th:text="${user.password}"></td>-->
                         <td th:text="${user.balance}"></td>
                         <td th:text="${user.role}"></td>
                         <td th:text="${user.enabled}"></td>
@@ -144,18 +121,15 @@
                     <div class = "col-sm-1">
                         <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                              <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
-                            <!--<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
                             <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
                         </span>
                     </div>
                     <div class = "col-sm-1">
                         <a th:if="${currentPage < totalPages}"  th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
-                      <!--  <a th:if="${currentPage < totalPages}"  th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>-->
                         <span th:unless="${currentPage < totalPages}">Next</span>
                     </div>
                     <div class="col-sm-1">
                         <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
-                        <!--<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>-->
                         <span th:unless="${currentPage < totalPages}">Last</span>
                     </div>
                 </div>
@@ -165,8 +139,5 @@
         </div>
     </div>
 
-   <!-- <p>
-        Utilisateur : <span th:text="${userid.lastName}"/>
-    </p>-->
 </body>
 </html>

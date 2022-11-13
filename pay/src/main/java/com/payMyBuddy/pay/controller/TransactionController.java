@@ -11,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "transaction")
@@ -24,22 +22,6 @@ public class TransactionController {
     @Autowired
     private UserService userService;
 
-    private List<Transaction> transactions;
-
-    // Constructeur
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
-
-
-
-    //************************************ mis dans HomepageController
-   /* @GetMapping(value = "/transfer")
-    public String transferPages(@AuthenticationPrincipal User user, Model model) {
-        transactions = transactionService.findTransactionsOfUserPrincipal(user);
-        model.addAttribute("transfer", transactions);
-        return "transfer";
-    }*/
 
    //
     @PostMapping(value = "/transfer")

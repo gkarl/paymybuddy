@@ -13,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.plaf.PanelUI;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +32,12 @@ public class AccountServiceTest {
     @InjectMocks
     private AccountService accountService;
 
+    @InjectMocks
+    private UserService userService;
+
     @BeforeEach
     void setup() {
-        accountService = new AccountService(accountRepository, userRepository);
+        accountService = new AccountService(accountRepository, userService);
     }
 
     @Test
